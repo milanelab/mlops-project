@@ -19,9 +19,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install pandas numpy scikit-learn --only-binary=:all:
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip setuptools wheel
+          pip install numpy==1.26.4 pandas==2.2.2 scikit-learn==1.4.2
+          pip install -r requirements.txt --no-deps
           pip install dvc
 
       - name: Install CML
