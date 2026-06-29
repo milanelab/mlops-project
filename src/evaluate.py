@@ -1,22 +1,17 @@
 import pandas as pd
 import joblib
-from sklearn.metrics import accuracy_score
-import json
+from sklearn.metrics import accuracy_score, classification_report
 
 df = pd.read_csv("data/processed/data.csv")
 
-X = df[["feature1", "feature2"]]
-y = df["label"]
+X = df[["feature1", "feature2", "cholesterol"]]
+y = df["target"]
 
 model = joblib.load("models/model.pkl")
 
-pred = model.predict(X)
+preds = model.predict(X)
 
-acc = accuracy_score(y, pred)
+print("Accuracy:", accuracy_score(y, preds))
+print(classification_report(y, preds))
 
-metrics = {"accuracy": acc}
-
-with open("metrics/metrics.json", "w") as f:
-    json.dump(metrics, f)
-
-print(metrics)
+print("Evaluation done")

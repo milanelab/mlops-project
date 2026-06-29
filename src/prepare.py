@@ -2,13 +2,9 @@ import os
 import psycopg2
 import pandas as pd
 
-# Detect CI environment
 IS_CI = os.getenv("CI")
 
-if IS_CI:
-    host = "localhost"
-else:
-    host = "postgres"
+host = "localhost" if IS_CI else "postgres"
 
 conn = psycopg2.connect(
     host=host,
@@ -18,10 +14,12 @@ conn = psycopg2.connect(
     password="pass"
 )
 
-# Load data
 df = pd.read_sql("SELECT * FROM data", conn)
 
-# Save processed data
+# Simple feature engineering (IMPORTANT)
+df["feature1"] = df["age"]
+df["feature2"] = df["pressure"]
+
 os.makedirs("data/processed", exist_ok=True)
 df.to_csv("data/processed/data.csv", index=False)
 
