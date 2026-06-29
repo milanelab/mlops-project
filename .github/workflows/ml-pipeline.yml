@@ -23,7 +23,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready"
+          --health-cmd "pg_isready -U postgres"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -43,6 +43,8 @@ jobs:
           pip install numpy==1.26.4 pandas==2.2.2 scikit-learn==1.4.2 matplotlib
           pip install -r requirements.txt --no-deps
           pip install dvc psycopg2-binary
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
 
       - name: Wait for Postgres
         run: sleep 10
