@@ -2,29 +2,23 @@ import os
 import psycopg2
 import pandas as pd
 
-# CI flag (GitHub Actions automatski setuje CI=true)
+# Detect CI environment
 IS_CI = os.getenv("CI")
 
 if IS_CI:
-    # GitHub Actions PostgreSQL service
-    conn = psycopg2.connect(
-        host="localhost",
-        port=5432,
-        database="db",
-        user="postgres",
-        password="pass"
-    )
+    host = "localhost"
 else:
-    # Lokalno (Docker Compose)
-    conn = psycopg2.connect(
-        host="postgres",
-        port=5432,
-        database="db",
-        user="postgres",
-        password="pass"
-    )
+    host = "postgres"
 
-# Load data from DB
+conn = psycopg2.connect(
+    host=host,
+    port=5432,
+    database="db",
+    user="postgres",
+    password="pass"
+)
+
+# Load data
 df = pd.read_sql("SELECT * FROM data", conn)
 
 # Save processed data

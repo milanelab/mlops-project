@@ -17,8 +17,6 @@ jobs:
           POSTGRES_DB: db
         ports:
           - 5432:5432
-        volumes:
-          - ${{ github.workspace }}/db/init.sql:/docker-entrypoint-initdb.d/init.sql
         options: >-
           --health-cmd "pg_isready"
           --health-interval 10s
@@ -43,6 +41,10 @@ jobs:
 
       - name: Wait for Postgres
         run: sleep 10
+
+      - name: Init DB
+        run: |
+          PGPASSWORD=pass psql -h localhost -U postgres -d db -f db/init.sql
 
       - name: Run DVC pipeline
         run: |
