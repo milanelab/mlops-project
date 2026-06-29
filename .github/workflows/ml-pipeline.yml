@@ -19,6 +19,8 @@ jobs:
 
       - name: Install dependencies
         run: |
+          pip install --upgrade pip
+          pip install pandas numpy scikit-learn --only-binary=:all:
           pip install -r requirements.txt
           pip install dvc
 
