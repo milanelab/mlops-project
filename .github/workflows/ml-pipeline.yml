@@ -68,5 +68,3 @@ jobs:
           echo "" >> report.md
           echo "## ROC Curve" >> report.md
           echo "ROC slika generisana: metrics/roc.png" >> report.md
-
-          cml comment create report.md
