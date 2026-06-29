@@ -62,11 +62,11 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "## 📊 Model Metrics" > report.md
+          echo "## Model Metrics" > report.md
           cat metrics/metrics.json >> report.md
 
           echo "" >> report.md
           echo "## ROC Curve" >> report.md
-          cml publish metrics/roc.png --md >> report.md
+          echo "ROC slika generisana: metrics/roc.png" >> report.md
 
           cml comment create report.md
